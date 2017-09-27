@@ -1,17 +1,23 @@
-from PyQt5 import QtWidgets
-import sys
+from PyQt5 import QtCore, QtWidgets
 
-app = QtWidgets.QApplication(sys.argv)
-window = QtWidgets.QWidget()
-window.setWindowTitle('First QT programm')
-window.resize(300,70)
-label = QtWidgets.QLabel("<center> Hello guys</center>")
-btnQuit = QtWidgets.QPushButton("close")
-vbox = QtWidgets.QVBoxLayout()
-vbox.addWidget(label)
-vbox.addWidget(btnQuit)
-btnQuit.clicked.connect(app.quit)
-window.setLayout(vbox)
+class MyWindow(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        QtWidgets.QWidget.__init__(self,parent)
+        self.label = QtWidgets.QLabel('Hello World')
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.btnQuit = QtWidgets.QPushButton("Close Window")
+        self.vbox = QtWidgets.QVBoxLayout()
+        self.vbox.addWidget(self.label)
+        self.vbox.addWidget(self.btnQuit)
+        self.setLayout(self.vbox)
+        self.btnQuit.clicked.connect(QtWidgets.qApp.quit)
 
-window.show()
-sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    window = MyWindow()
+    window.setWindowTitle("OOP style")
+    window.resize(300,70)
+    window.show()
+    sys.exit(app.exec_())
