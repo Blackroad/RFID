@@ -3,7 +3,7 @@ from pywinauto.application import Application
 class AAECapp(Application):
     def __init__(self):
         Application.__init__(self)
-        self.app = self.connect(path=r'C:\Dev\RFID_Master\Dev-branch-FW-FinalPackCAPA-branch\AAEC\ECL\ECLUnitTestUI\ECLUnitTestUI\bin\x86\Debug\AAEC.exe')
+        self.app = self.connect(path=r'C:\Dev\RFID_Master\AAEC\ECL\ECLUnitTestUI\ECLUnitTestUI\bin\x86\Debug')
         self.manual_camera = self.app['Manual Camera: Manual']
         self.main_form = self.app["- ()"]
         self.login = self.app['Login']
@@ -31,13 +31,12 @@ class AAECapp(Application):
             self.login.PasswordEdit.type_keys('Drulich121314')
             self.login.Login.click()
 
-
-
-    def lot_input(self,lot_id):
-        self.manual_camera.wait('ready visible',timeout=20,retry_interval=1)
-        self.manual_camera.type_keys("{BACKSPACE}")
-        self.manual_camera.type_keys(lot_id)
-        self.manual_camera.Submit.click()
+    def lot_input(self, lot_id:[]):
+        for i in lot_id:
+            self.manual_camera.wait('ready visible', timeout=20, retry_interval=1)
+            self.manual_camera.type_keys("{BACKSPACE}")
+            self.manual_camera.type_keys(i)
+            self.manual_camera.Submit.click()
 
     def rfid_manual_submit(self,value=None):
         if value is None:
