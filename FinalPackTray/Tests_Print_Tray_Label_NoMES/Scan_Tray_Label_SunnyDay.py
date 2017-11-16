@@ -12,10 +12,16 @@ def Print_Tray_Label_NoMES():
         AAEC.printer_label_dialog.wait('ready',10,1)
         AAEC.printer_label_dialog.Yes.click()
         # lot input
+<<<<<<< HEAD:FinalPackTray/Tests_Print_Tray_Label_NoMES/Scan_Tray_Label_SunnyDay.py
         # AAEC.lot_input(lot_id='L3ASY001')
         # AAEC.lot_input(lot_id='L3ASY002')
         # AAEC.confirmation_form('Accept')
         # AAEC.pa_tracker('PA Track')
+=======
+        AAEC.lot_input(lot_id=['L3ASY002','L3ASY003'])
+        AAEC.confirmation_form('Accept')
+        AAEC.pa_tracker('PA Track')
+>>>>>>> 9a439d009821e89cf129e352a0d9785eadf8a979:FinalPackTray/Tests_Print_Tray_Label_NoMES/Scan_Tray_Label_SunnyDay.py
         # expected: Dialog is displayed with appropriate text
         assert (AAEC.get_label_text('Read RFID')) == 'Get tray label and read RFID. Contact area leader if RFID does not read.'
         AAEC.rfid_manual_submit()

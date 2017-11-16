@@ -14,8 +14,11 @@ class MyDialog(QtWidgets.QDialog):
         self.button.clicked.connect(self.on_clicked)
 
     def on_clicked(self):
+     if self.myWiget.label.text() == 'Hello World':
         self.myWiget.label.setText("New LAbel")
-        self.button.setDisabled(True)
+     elif self.myWiget.label.text() == 'New LAbel':
+         self.myWiget.label.setText("Hello World!")
+     self.button.setDisabled(False)
 
 if __name__=='__main__':
     import sys
