@@ -3,7 +3,7 @@ from pywinauto.application import Application
 class AAECapp(Application):
     def __init__(self):
         Application.__init__(self)
-        self.app = self.connect(path=r'C:\Dev\RFID_Master\Dev-branch-FW-FinalPackCAPA-branch\AAEC\ECL\ECLUnitTestUI\ECLUnitTestUI\bin\x86\Debug\AAEC.exe')
+        self.app = self.connect(path=r'D:\Dev\CAPA_ButtomFlor\CAPA\AAEC\ECL\ECLUnitTestUI\ECLUnitTestUI\bin\x86\Debug\AAEC.exe')
         self.manual_camera = self.app['Manual Camera: Manual']
         self.main_form = self.app["- ()"]
         self.login = self.app['Login']
@@ -16,11 +16,15 @@ class AAECapp(Application):
         self.reprint_not_authorized = self.app['Reprint not authorized']
         self.reprint_login_warn = self.app['Reprint was successful.']
         self.incorrect_preamble = self.app['Incorrect label preamble']
+        self.assosiation_form = self.app['Association']
 
 
     def main_app_start(self):
         self.main_form.type_keys("^{F5}")
         self.main_form.Start.click()
+
+    def association_form_start(self):
+        self.assosiation_form.wait('ready visible')
 
 
     def log_in(self,reallogin=False):
@@ -33,11 +37,13 @@ class AAECapp(Application):
 
 
 
-    def lot_input(self,lot_id):
-        self.manual_camera.wait('ready visible',timeout=20,retry_interval=1)
-        self.manual_camera.type_keys("{BACKSPACE}")
-        self.manual_camera.type_keys(lot_id)
-        self.manual_camera.Submit.click()
+    def lot_input(self,lot_id:[]):
+        for i in lot_id:
+            self.manual_camera.wait('ready visible',timeout=30,retry_interval=1)
+            self.manual_camera.type_keys("{BACKSPACE}")
+            self.manual_camera.type_keys(i)
+            self.manual_camera.Submit.click()
+
 
     def rfid_manual_submit(self,value=None):
         if value is None:
@@ -49,6 +55,7 @@ class AAECapp(Application):
             self.RFID_manual_input.Submit.click()
 
     def get_label_text(self,win_title):
+        self.app[win_title].wait('ready visible', timeout=1000)
         win = self.app[win_title].Static.texts()
         win2 = self.app[win_title].Static2.texts()
         if win == ['']:
