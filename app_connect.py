@@ -3,11 +3,7 @@ from pywinauto.application import Application
 class AAECapp(Application):
     def __init__(self):
         Application.__init__(self)
-<<<<<<< HEAD
-        self.app = self.connect(path=r'D:\Dev\CAPA_ButtomFlor\CAPA\AAEC\ECL\ECLUnitTestUI\ECLUnitTestUI\bin\x86\Debug\AAEC.exe')
-=======
-        self.app = self.connect(path=r'C:\Dev\RFID_Master\AAEC\ECL\ECLUnitTestUI\ECLUnitTestUI\bin\x86\Debug')
->>>>>>> 9a439d009821e89cf129e352a0d9785eadf8a979
+        self.app = self.connect(path=r'C:\Dev\RFID_Master\AAEC\ECL\ECLUnitTestUI\ECLUnitTestUI\bin\x86\Debug\AAEC.exe')
         self.manual_camera = self.app['Manual Camera: Manual']
         self.main_form = self.app["- ()"]
         self.login = self.app['Login']
@@ -23,13 +19,10 @@ class AAECapp(Application):
         self.assosiation_form = self.app['Association']
 
 
+
     def main_app_start(self):
         self.main_form.type_keys("^{F5}")
         self.main_form.Start.click()
-
-    def association_form_start(self):
-        self.assosiation_form.wait('ready visible')
-
 
     def log_in(self,reallogin=False):
         if (reallogin)is False:
@@ -39,32 +32,28 @@ class AAECapp(Application):
             self.login.PasswordEdit.type_keys('Drulich121314')
             self.login.Login.click()
 
-<<<<<<< HEAD
-
-
     def lot_input(self,lot_id:[]):
         for i in lot_id:
-            self.manual_camera.wait('ready visible',timeout=30,retry_interval=1)
+            self.manual_camera.wait('ready visible',timeout=10,retry_interval=1)
             self.manual_camera.type_keys("{BACKSPACE}")
             self.manual_camera.type_keys(i)
             self.manual_camera.Submit.click()
 
-=======
-    def lot_input(self, lot_id:[]):
-        for i in lot_id:
-            self.manual_camera.wait('ready visible', timeout=20, retry_interval=1)
-            self.manual_camera.type_keys("{BACKSPACE}")
-            self.manual_camera.type_keys(i)
-            self.manual_camera.Submit.click()
->>>>>>> 9a439d009821e89cf129e352a0d9785eadf8a979
-
-    def rfid_manual_submit(self,value=None):
-        if value is None:
-            self.RFID_manual_input.wait('ready visible',timeout=20,retry_interval=1)
+    def rfid_manual_submit(self,value:[]= None):
+        self.RFID_manual_input.wait('ready visible', timeout=10, retry_interval=1)
+        if (value)== None:
             self.RFID_manual_input.Submit.click()
-        else:
-            self.RFID_manual_input.edit.type_keys(value)
-            self.RFID_manual_input.Add.click()
+        elif len(value) == 1:
+            for i in value:
+                self.RFID_manual_input.edit.type_keys(i)
+                self.RFID_manual_input.Add.click()
+            self.RFID_manual_input.Submit.click()
+        elif len(value) > 1:
+            for i in value:
+                self.RFID_manual_input.edit.type_keys(i)
+                self.RFID_manual_input.Add.click()
+                self.RFID_manual_input.edit.select()
+
             self.RFID_manual_input.Submit.click()
 
     def get_label_text(self,win_title):
@@ -82,6 +71,10 @@ class AAECapp(Application):
     def confirmation_form(self,action):
         self.main_form[action].wait('visible',5,1)
         self.main_form[action].click()
+
+    def chumber_ready(self):
+        self.assosiation_form['CHAMBER READY'].wait('enabled', 5, 1)
+        self.assosiation_form['CHAMBER READY'].click()
 
     def pa_tracker(self,action):
         self.PA_Tracker.wait('ready visible', timeout=5,retry_interval=1)
